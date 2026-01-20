@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Core\Http\Controllers\CoreController;
+use Modules\Core\Http\Controllers\ActivityController;
 use Modules\Core\Http\Controllers\AuthController;
+use Modules\Core\Http\Controllers\CoreController;
 use Modules\Core\Http\Controllers\DashboardController;
-use Modules\Core\Http\Controllers\UserController;
-use Modules\Core\Http\Controllers\RoleController;
-use Modules\Core\Http\Controllers\PermissionController;
 use Modules\Core\Http\Controllers\ModuleController;
+use Modules\Core\Http\Controllers\PermissionController;
+use Modules\Core\Http\Controllers\RoleController;
+use Modules\Core\Http\Controllers\UserController;
 
 Route::get('login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('login.post');
@@ -16,7 +17,7 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::prefix('cores')->name('cores.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        
+
         // Routes pour la gestion des utilisateurs
         Route::prefix('users')->name('users.')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('index');
@@ -29,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('toggle-status');
             Route::put('/{id}/profile', [UserController::class, 'updateProfile'])->name('update-profile');
             Route::post('/{id}/avatar', [UserController::class, 'updateAvatar'])->name('update-avatar');
-            
+
             // Gestion des rôles via AJAX sur la page show
             Route::get('/{id}/roles/available', [UserController::class, 'getAvailableRoles'])->name('available-roles');
             Route::post('/{id}/roles', [UserController::class, 'assignRole'])->name('assign-role');
@@ -47,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/', [RoleController::class, 'store'])->name('store');
             Route::put('/{id}', [RoleController::class, 'update'])->name('update');
             Route::delete('/{id}', [RoleController::class, 'destroy'])->name('destroy');
-            
+
             // Gestion des permissions du rôle
             Route::get('/{id}/permissions', [RoleController::class, 'getPermissions'])->name('permissions');
             Route::post('/{id}/toggle-permission', [RoleController::class, 'togglePermission'])->name('toggle-permission');
@@ -70,6 +71,13 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{slug}', [ModuleController::class, 'uninstall'])->name('uninstall');
             Route::get('/{slug}/configure', [ModuleController::class, 'configure'])->name('configure');
             Route::post('/{slug}/configure', [ModuleController::class, 'updateConfiguration'])->name('configure.update');
+        });
+
+        // Routes pour la gestion des activités
+        Route::prefix('activities')->name('activities.')->group(function () {
+            Route::get('/', [ActivityController::class, 'index'])->name('index');
+            Route::get('/data', [ActivityController::class, 'getData'])->name('data');
+            Route::get('/{id}', [ActivityController::class, 'show'])->name('show');
         });
     });
 });

@@ -69,6 +69,12 @@
                       <p>Modules</p>
                     </a>
                   </li> 
+                  <li class="nav-item">
+                    <a href="{{ route('cores.activities.index') }}" class="nav-link">
+                      <i class="nav-icon bi bi-clock-history"></i>
+                      <p>Activités</p>
+                    </a>
+                  </li>
                 </ul>
               </li>
                
