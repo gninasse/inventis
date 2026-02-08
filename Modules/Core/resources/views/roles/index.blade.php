@@ -29,9 +29,11 @@
                 <i class="fas fa-trash"></i>
             </button>
             @endcan
+            @can('cores.permissions.index')
             <button id="btn-manage-permissions" class="btn btn-secondary" disabled data-bs-toggle="tooltip" title="Gérer les permissions">
                 <i class="fas fa-shield-alt"></i>
             </button>
+            @endcan
         </div>
         <table id="roles-table"
                data-toggle="table"

@@ -7,6 +7,7 @@ use Modules\Core\Http\Controllers\CoreController;
 use Modules\Core\Http\Controllers\DashboardController;
 use Modules\Core\Http\Controllers\ModuleController;
 use Modules\Core\Http\Controllers\PermissionController;
+use Modules\Core\Http\Controllers\ProfileController;
 use Modules\Core\Http\Controllers\RoleController;
 use Modules\Core\Http\Controllers\UserController;
 
@@ -79,6 +80,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/data', [ActivityController::class, 'getData'])->name('data');
             Route::get('/{id}', [ActivityController::class, 'show'])->name('show');
         });
+
+        // Routes pour le profil utilisateur
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+        Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+        Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     });
 });
 Route::resource('cores', CoreController::class)->names('core');

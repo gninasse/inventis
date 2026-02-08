@@ -38,16 +38,29 @@
 </div>
 
 <div class="card mb-4">
-    <div class="card-header bg-light">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
         <h5 class="card-title mb-0">
             <i class="fas fa-filter me-2"></i>Filtres
         </h5>
+        <div class="card-tools">
+            @can('cores.activities.export')
+                <button class="btn btn-outline-success btn-sm me-2">
+                    <i class="fas fa-download me-1"></i> Exporter
+                </button>
+            @endcan
+            @can('cores.activities.cleanup')
+                <button class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-broom me-1"></i> Nettoyer
+                </button>
+            @endcan
+        </div>
     </div>
     <div class="card-body">
         <form id="filter-form" class="row g-3">
+            <!-- Ligne 1 : Filtres principaux -->
             <div class="col-md-3">
                 <label for="module" class="form-label">Module</label>
-                <select name="module" id="module" class="form-select">
+                <select name="module" id="module" class="form-select select2">
                     <option value="">Tous les modules</option>
                     @foreach($modules as $slug => $name)
                         <option value="{{ $slug }}">{{ $name }}</option>
@@ -56,14 +69,14 @@
             </div>
             <div class="col-md-3">
                 <label for="user_id" class="form-label">Utilisateur</label>
-                <select name="user_id" id="user_id" class="form-select">
+                <select name="user_id" id="user_id" class="form-select select2">
                     <option value="">Tous les utilisateurs</option>
                     @foreach($users as $user)
                         <option value="{{ $user->id }}">{{ $user->name }} {{ $user->last_name }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label for="role" class="form-label">Rôle</label>
                 <select name="role" id="role" class="form-select">
                     <option value="">Tous les rôles</option>
@@ -72,7 +85,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label for="action_type" class="form-label">Action</label>
                 <select name="action_type" id="action_type" class="form-select">
                     <option value="">Toutes les actions</option>
@@ -83,13 +96,59 @@
                     <option value="logout">Déconnexion</option>
                 </select>
             </div>
+
+            <!-- Ligne 2 : Filtres avancés -->
+            <div class="col-md-3">
+                <label for="log_name" class="form-label">Journal (Log)</label>
+                <select name="log_name" id="log_name" class="form-select">
+                    <option value="">Tous les journaux</option>
+                    @foreach($logNames as $logName)
+                        <option value="{{ $logName }}">{{ ucfirst($logName) }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="subject_type" class="form-label">Type Modèle</label>
+                <select name="subject_type" id="subject_type" class="form-select">
+                    <option value="">Tous les modèles</option>
+                    @foreach($subjectTypes as $type)
+                        <option value="{{ $type['full'] }}">{{ $type['short'] }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="col-md-2">
+                <label for="subject_id" class="form-label">ID Sujet</label>
+                <input type="number" name="subject_id" id="subject_id" class="form-control" placeholder="ID">
+            </div>
+            <div class="col-md-2">
+                <label for="ip_address" class="form-label">Adresse IP</label>
+                <input type="text" name="ip_address" id="ip_address" class="form-control" placeholder="127.0.0.1">
+            </div>
+            <div class="col-md-2">
+                <label for="causer_type" class="form-label">Déclencheur</label>
+                <select name="causer_type" id="causer_type" class="form-select">
+                    <option value="">Tous</option>
+                    <option value="user">Utilisateur</option>
+                    <option value="system">Système</option>
+                </select>
+            </div>
+
+            <!-- Ligne 3 : Dates et Actions -->
+            <div class="col-md-3">
                 <label for="date_from" class="form-label">Depuis le</label>
                 <input type="date" name="date_from" id="date_from" class="form-control">
             </div>
-            <div class="col-md-12 text-end">
-                <button type="button" id="btn-reset" class="btn btn-secondary">Réinitialiser</button>
-                <button type="button" id="btn-apply" class="btn btn-primary">Appliquer les filtres</button>
+            <div class="col-md-3">
+                <label for="date_to" class="form-label">Jusqu'au</label>
+                <input type="date" name="date_to" id="date_to" class="form-control">
+            </div>
+            <div class="col-md-6 text-end align-self-end">
+                <button type="button" id="btn-reset" class="btn btn-secondary">
+                    <i class="fas fa-undo me-1"></i>Réinitialiser
+                </button>
+                <button type="button" id="btn-apply" class="btn btn-primary">
+                    <i class="fas fa-search me-1"></i>Appliquer les filtres
+                </button>
             </div>
         </form>
     </div>

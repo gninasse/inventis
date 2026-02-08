@@ -39,42 +39,54 @@
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
+                  @can('cores.dashboard.view')
                   <li class="nav-item">
-                    <a href="{{ route('cores.dashboard') }}" class="nav-link active">
-                      <i class="nav-icon bi bi-circle"></i>
+                    <a href="{{ route('cores.dashboard') }}" class="nav-link {{ request()->routeIs('cores.dashboard') ? 'active' : '' }}">
+                      <i class="nav-icon bi bi-speedometer2"></i>
                       <p>Dashboard</p>
                     </a>
                   </li>
+                  @endcan
+                  @can('cores.users.index')
                   <li class="nav-item">
-                    <a href="{{ route('cores.users.index') }}" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
+                    <a href="{{ route('cores.users.index') }}" class="nav-link {{ request()->routeIs('cores.users.*') ? 'active' : '' }}">
+                      <i class="nav-icon bi bi-people"></i>
                       <p>Utilisateurs</p>
                     </a>
                   </li>
+                  @endcan
+                  @can('cores.roles.index')
                   <li class="nav-item">
-                    <a href="{{ route('cores.roles.index') }}" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
+                    <a href="{{ route('cores.roles.index') }}" class="nav-link {{ request()->routeIs('cores.roles.*') ? 'active' : '' }}">
+                      <i class="nav-icon bi bi-shield-lock"></i>
                       <p>Rôles</p>
                     </a>
                   </li>
+                  @endcan
+                  @can('cores.permissions.index')
                   <li class="nav-item">
-                    <a href="{{ route('cores.permissions.index') }}" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
+                    <a href="{{ route('cores.permissions.index') }}" class="nav-link {{ request()->routeIs('cores.permissions.*') ? 'active' : '' }}">
+                      <i class="nav-icon bi bi-key"></i>
                       <p>Permissions</p>
                     </a>
                   </li>
+                  @endcan
+                  @can('cores.modules.index')
                   <li class="nav-item">
-                    <a href="{{ route('cores.modules.index') }}" class="nav-link">
+                    <a href="{{ route('cores.modules.index') }}" class="nav-link {{ request()->routeIs('cores.modules.*') ? 'active' : '' }}">
                       <i class="nav-icon bi bi-box-seam"></i>
                       <p>Modules</p>
                     </a>
                   </li> 
+                  @endcan
+                  @can('cores.activities.index')
                   <li class="nav-item">
-                    <a href="{{ route('cores.activities.index') }}" class="nav-link">
+                    <a href="{{ route('cores.activities.index') }}" class="nav-link {{ request()->routeIs('cores.activities.*') ? 'active' : '' }}">
                       <i class="nav-icon bi bi-clock-history"></i>
                       <p>Activités</p>
                     </a>
                   </li>
+                  @endcan
                 </ul>
               </li>
                

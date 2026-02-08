@@ -17,7 +17,7 @@ class Activity extends BaseActivity
         'properties',
         'context',
         'causer_roles',
-        'expected_at',
+        'expires_at',
         'retention_months',
         'ip_address',
         'user_agent',
@@ -27,8 +27,9 @@ class Activity extends BaseActivity
         'properties' => 'collection',
         'context' => 'array',
         'causer_roles' => 'array',
+        'expires_at' => 'datetime',
     ];
- 
+
     /**
      * Scope pour filtrer par module
      */
@@ -55,7 +56,7 @@ class Activity extends BaseActivity
      */
     public function getIconAttribute(): string
     {
-        return match($this->description) {
+        return match ($this->description) {
             'created' => 'fa-plus-circle text-success',
             'updated' => 'fa-edit text-warning',
             'deleted' => 'fa-trash text-danger',
@@ -73,7 +74,7 @@ class Activity extends BaseActivity
      */
     public function getBadgeColorAttribute(): string
     {
-        return match($this->description) {
+        return match ($this->description) {
             'created' => 'success',
             'updated' => 'warning',
             'deleted' => 'danger',

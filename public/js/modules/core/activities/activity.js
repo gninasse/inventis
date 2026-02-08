@@ -12,6 +12,11 @@ $(function () {
                 user_id: $('#user_id').val(),
                 role: $('#role').val(),
                 action_type: $('#action_type').val(),
+                log_name: $('#log_name').val(),
+                subject_type: $('#subject_type').val(),
+                subject_id: $('#subject_id').val(),
+                ip_address: $('#ip_address').val(),
+                causer_type: $('#causer_type').val(),
                 date_from: $('#date_from').val(),
                 date_to: $('#date_to').val()
             }
@@ -21,12 +26,21 @@ $(function () {
     // Réinitialiser les filtres
     $('#btn-reset').on('click', function () {
         $filterForm[0].reset();
+        // Reset Select2 if they exist
+        if ($.fn.select2) {
+            $('.select2').val(null).trigger('change');
+        }
         $table.bootstrapTable('refresh', {
             query: {
                 module: '',
                 user_id: '',
                 role: '',
                 action_type: '',
+                log_name: '',
+                subject_type: '',
+                subject_id: '',
+                ip_address: '',
+                causer_type: '',
                 date_from: '',
                 date_to: ''
             }

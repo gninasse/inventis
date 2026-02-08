@@ -33,7 +33,7 @@
             <li class="nav-item dropdown user-menu">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                 <img
-                  src="{{ asset('adminlte/assets/img/user2-160x160.jpg') }}"
+                  src="{{ Auth::user()->avatar_url }}"
                   class="user-image rounded-circle shadow"
                   alt="User Image"
                 />
@@ -43,7 +43,7 @@
                 <!--begin::User Image-->
                 <li class="user-header text-bg-primary">
                   <img
-                    src="{{ asset('adminlte/assets/img/user2-160x160.jpg') }}"
+                    src="{{ Auth::user()->avatar_url }}"
                     class="rounded-circle shadow"
                     alt="User Image"
                   />
@@ -56,7 +56,7 @@
                 
                 <!--begin::Menu Footer-->
                 <li class="user-footer">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{ route('cores.profile') }}" class="btn btn-default btn-flat">Profile</a>
                   <a href="#" class="btn btn-default btn-flat float-end"
                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                      Se deconnecter

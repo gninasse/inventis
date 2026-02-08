@@ -9,6 +9,10 @@
                     <td>{{ $activity->created_at->format('d/m/Y H:i:s') }}</td>
                 </tr>
                 <tr>
+                    <th width="150">Expire le</th>
+                    <td>{{ $activity->expires_at?->format('d/m/Y H:i:s') }}</td>
+                </tr>
+                <tr>
                     <th>Module</th>
                     <td><span class="badge bg-info">{{ strtoupper($activity->module) }}</span></td>
                 </tr>
@@ -117,6 +121,7 @@
                 <p class="mb-1"><strong>User Agent:</strong> <small>{{ $activity->user_agent ?? $activity->properties['user_agent'] ?? 'N/A' }}</small></p>
                 <p class="mb-0"><strong>Toutes les propriétés:</strong></p>
                 <pre class="mb-0 mt-2" style="font-size: 0.8rem;">{{ json_encode($activity->properties, JSON_PRETTY_PRINT) }}</pre>
+                <pre class="mb-0 mt-2" style="font-size: 0.8rem;">{{ json_encode($activity->context, JSON_PRETTY_PRINT) }}</pre>
             </div>
         </div>
     </div>

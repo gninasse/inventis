@@ -3,10 +3,10 @@
 namespace Modules\Core\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Modules\Core\Models\Activity;
 use Modules\Core\Models\Module;
+use Modules\Core\Models\User;
 use Spatie\Permission\Models\Role;
 
 class ActivityController extends Controller
@@ -17,7 +17,15 @@ class ActivityController extends Controller
         $users = User::select(['id', 'name', 'last_name'])->get();
         $roles = Role::pluck('name', 'name');
 
-        return view('core::activities.index', compact('modules', 'users', 'roles'));
+        $logNames = Activity::distinct()->pluck('log_name');
+        $subjectTypes = Activity::distinct()->pluck('subject_type')->filter()->map(function ($type) {
+            return [
+                'full' => $type,
+                'short' => class_basename($type),
+            ];
+        });
+
+        return view('core::activities.index', compact('modules', 'users', 'roles', 'logNames', 'subjectTypes'));
     }
 
     public function getData(Request $request)
@@ -45,6 +53,38 @@ class ActivityController extends Controller
         // Filtrage par type d'action (description)
         if ($request->filled('action_type')) {
             $query->where('description', $request->action_type);
+        }
+
+        // Filtrage par Journal (log_name)
+        if ($request->filled('log_name')) {
+            $query->where('log_name', $request->log_name);
+        }
+
+        // Filtrage par Type de modèle (subject_type)
+        if ($request->filled('subject_type')) {
+            $query->where('subject_type', $request->subject_type);
+        }
+
+        // Filtrage par ID du sujet
+        if ($request->filled('subject_id')) {
+            $query->where('subject_id', $request->subject_id);
+        }
+
+        // Filtrage par IP
+        if ($request->filled('ip_address')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('ip_address', 'like', "%{$request->ip_address}%")
+                    ->orWhere('properties->ip', 'like', "%{$request->ip_address}%");
+            });
+        }
+
+        // Filtrage par Type de Causer (Système vs Utilisateur)
+        if ($request->filled('causer_type')) {
+            if ($request->causer_type === 'system') {
+                $query->whereNull('causer_id');
+            } else {
+                $query->whereNotNull('causer_id');
+            }
         }
 
         // Filtrage par date

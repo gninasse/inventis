@@ -1,6 +1,9 @@
 <?php
 
 return [
+    // Dashboard
+    'cores.dashboard.view' => 'Voir le tableau de bord',
+
     // Utilisateurs
     'cores.users.index' => 'Voir la liste des utilisateurs',
     'cores.users.store' => 'Créer un utilisateur',
@@ -12,7 +15,7 @@ return [
     // Rôles
     'cores.roles.index' => 'Voir la liste des rôles',
     'cores.roles.store' => 'Créer un rôle',
-    'cores.roles.update' => 'Modifier un rôle', 
+    'cores.roles.update' => 'Modifier un rôle',
     'cores.roles.destroy' => 'Supprimer un rôle',
 
     // Permissions
@@ -28,8 +31,11 @@ return [
     'cores.modules.enable' => 'Activer un module',
     'cores.modules.disable' => 'Désactiver un module',
     'cores.modules.configure' => 'Configurer un module',
-// Gestion des activités
-'cores.activities.view' => 'Voir l\'historique des activités',
-'cores.activities.export' => 'Exporter l\'historique',
-'cores.activities.cleanup' => 'Nettoyer les anciennes activités'
+
+    // Gestion des activités
+    'cores.activities.index' => 'Voir le journal des activités',
+    'cores.activities.data' => 'Accéder aux données des activités',
+    'cores.activities.show' => 'Voir les détails d\'une activité',
+    'cores.activities.export' => 'Exporter l\'historique',
+    'cores.activities.cleanup' => 'Nettoyer les anciennes activités',
 ];
