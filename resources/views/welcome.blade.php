@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion de Parc Informatique - CHU-YO Fondation</title>
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome/css/all.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('adminlte/css/adminlte.min.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('plugins/tools/tools.css') }}"> 
+    
     <style>
         :root {
             --navy: #001f3f;
@@ -99,7 +98,13 @@
                 </ul>
             </div>
             <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-                <li class="nav-item"><a href="#" class="btn btn-outline-light">Connexion</a></li>
+                <li class="nav-item">
+                    @auth
+                        <a href="{{ route('cores.dashboard') }}" class="btn btn-outline-light">Tableau de Bord</a>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-outline-light">Connexion</a>
+                    @endauth
+                </li>
             </ul>
         </div>
     </nav>
@@ -109,7 +114,11 @@
             <div class="container">
                 <h1>Visibilité totale et maîtrise complète de votre parc informatique</h1>
                 <p class="lead">Le module de Gestion de Parc du CHU-YO transforme la manière dont vous gérez vos actifs informatiques, de l'acquisition au retrait, en passant par la maintenance et la conformité.</p>
-                <a href="#cta" class="btn btn-lg btn-success">Connectez-vous</a>
+                @auth
+                    <a href="{{ route('cores.dashboard') }}" class="btn btn-lg btn-success">Accéder au tableau de bord</a>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-lg btn-success">Connectez-vous</a>
+                @endauth
             </div>
         </div>
 
@@ -148,7 +157,11 @@
             <div class="container">
                 <h2 class="mb-3">Transformons ensemble la gestion de notre parc informatique</h2>
                 <p class="lead mb-4">Vous avez des accès a cette plateforme?</p>
-                <a href="mailto:contact@chu-yo.fr" class="btn btn-lg btn-light"><i class="fas fa-user mr-2"></i>Connectez-vous</a>
+                @auth
+                    <a href="{{ route('cores.dashboard') }}" class="btn btn-lg btn-light"><i class="fas fa-tachometer-alt mr-2"></i>Tableau de bord</a>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-lg btn-light"><i class="fas fa-user mr-2"></i>Connectez-vous</a>
+                @endauth
             </div>
         </section>
     </div>
@@ -161,8 +174,8 @@
     </footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<script src="{{ asset('plugins/jquery/jquery-3.7.1.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.js') }}"></script>
+<script src="{{ asset('adminlte/js/adminlte.js') }}"></script>
 </body>
 </html>
