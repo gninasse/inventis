@@ -85,6 +85,209 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
         Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+
+        // --- REFERENTIEL ---
+        Route::prefix('referentiel')->name('referentiel.')->group(function () {
+
+            // Categories
+            Route::prefix('categories')->name('categories.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\CategorieController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\CategorieController::class, 'getData'])->name('data');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\CategorieController::class, 'show'])->name('show');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\CategorieController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\CategorieController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\CategorieController::class, 'destroy'])->name('destroy');
+            });
+
+            // Sous-Categories
+            Route::prefix('sous-categories')->name('sous-categories.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\SousCategorieController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\SousCategorieController::class, 'getData'])->name('data');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\SousCategorieController::class, 'show'])->name('show');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\SousCategorieController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\SousCategorieController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\SousCategorieController::class, 'destroy'])->name('destroy');
+            });
+
+            // Familles
+            Route::prefix('familles')->name('familles.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\FamilleController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\FamilleController::class, 'getData'])->name('data');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\FamilleController::class, 'show'])->name('show');
+                Route::get('/sous-categories/{categorieId}', [\Modules\Core\Http\Controllers\Referentiel\FamilleController::class, 'getSousCategories'])->name('sous-categories-by-categorie');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\FamilleController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\FamilleController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\FamilleController::class, 'destroy'])->name('destroy');
+            });
+
+            // Articles
+            Route::prefix('articles')->name('articles.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'getData'])->name('data');
+                Route::get('categories', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'getCategories'])->name('categories');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'show'])->name('show');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'destroy'])->name('destroy');
+                Route::get('sous-categories/{categorieId}', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'getSousCategories'])->name('sous-categories');
+                Route::get('familles/{sousCategorieId}', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'getFamilles'])->name('familles');
+            });
+
+            // Unités de mesure
+            Route::prefix('unites')->name('unites.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\UniteMesureController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\UniteMesureController::class, 'getData'])->name('data');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\UniteMesureController::class, 'show'])->name('show');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\UniteMesureController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\UniteMesureController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\UniteMesureController::class, 'destroy'])->name('destroy');
+            });
+
+            // Fournisseurs
+            Route::prefix('fournisseurs')->name('fournisseurs.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\FournisseurController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\FournisseurController::class, 'getData'])->name('data');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\FournisseurController::class, 'show'])->name('show');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\FournisseurController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\FournisseurController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\FournisseurController::class, 'destroy'])->name('destroy');
+            });
+
+            // Fabricants
+            Route::prefix('fabricants')->name('fabricants.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'getData'])->name('data');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'show'])->name('show');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'destroy'])->name('destroy');
+
+                // Marques (Nested or custom endpoints)
+                Route::post('/marques', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'storeMarque'])->name('marques.store');
+                Route::delete('/marques/{id}', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'destroyMarque'])->name('marques.destroy');
+
+                // Modeles
+                Route::post('/modeles', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'storeModele'])->name('modeles.store');
+                Route::delete('/modeles/{id}', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'destroyModele'])->name('modeles.destroy');
+            });
+
+            // Sources de financement
+            Route::prefix('sources')->name('sources.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\SourceFinancementController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\SourceFinancementController::class, 'getData'])->name('data');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\SourceFinancementController::class, 'show'])->name('show');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\SourceFinancementController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\SourceFinancementController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\SourceFinancementController::class, 'destroy'])->name('destroy');
+            });
+
+            // Modes d'acquisition
+            Route::prefix('modes-acquisition')->name('modes-acquisition.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\ModeAcquisitionController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\ModeAcquisitionController::class, 'getData'])->name('data');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\ModeAcquisitionController::class, 'show'])->name('show');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\ModeAcquisitionController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\ModeAcquisitionController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\ModeAcquisitionController::class, 'destroy'])->name('destroy');
+            });
+
+            // Budgets
+            Route::prefix('budgets')->name('budgets.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\BudgetController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\BudgetController::class, 'getData'])->name('data');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\BudgetController::class, 'show'])->name('show');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\BudgetController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\BudgetController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\BudgetController::class, 'destroy'])->name('destroy');
+            });
+
+            // Magasins
+            Route::prefix('magasins')->name('magasins.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'getData'])->name('data');
+                Route::post('/', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'store'])->name('store');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'destroy'])->name('destroy');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'show'])->name('show');
+
+                // Emplacements
+                Route::get('/{magasinId}/emplacements/data', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'getEmplacementsData'])->name('emplacements.data');
+                Route::post('/emplacements', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'storeEmplacement'])->name('emplacements.store');
+                Route::delete('/emplacements/{id}', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'destroyEmplacement'])->name('emplacements.destroy');
+            });
+        });
+
+        // --- ORGANISATION ---
+        Route::prefix('organisation')->name('organisation.')->group(function () {
+            // Sites
+            Route::prefix('sites')->name('sites.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Organisation\SiteController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Organisation\SiteController::class, 'getData'])->name('data');
+                Route::get('/arborescence', [\Modules\Core\Http\Controllers\Organisation\SiteController::class, 'getArborescence'])->name('arborescence');
+                Route::post('/', [\Modules\Core\Http\Controllers\Organisation\SiteController::class, 'store'])->name('store');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Organisation\SiteController::class, 'show'])->name('show');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Organisation\SiteController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Organisation\SiteController::class, 'destroy'])->name('destroy');
+            });
+
+            // Directions
+            Route::prefix('directions')->name('directions.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Organisation\DirectionController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Organisation\DirectionController::class, 'getData'])->name('data');
+                Route::post('/', [\Modules\Core\Http\Controllers\Organisation\DirectionController::class, 'store'])->name('store');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Organisation\DirectionController::class, 'show'])->name('show');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Organisation\DirectionController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Organisation\DirectionController::class, 'destroy'])->name('destroy');
+            });
+
+            // Services
+            Route::prefix('services')->name('services.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Organisation\ServiceController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Organisation\ServiceController::class, 'getData'])->name('data');
+                Route::get('/directions-by-site/{siteId}', [\Modules\Core\Http\Controllers\Organisation\ServiceController::class, 'getDirectionsBySite'])->name('directions-by-site'); // Helper ajax
+                Route::post('/', [\Modules\Core\Http\Controllers\Organisation\ServiceController::class, 'store'])->name('store');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Organisation\ServiceController::class, 'show'])->name('show');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Organisation\ServiceController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Organisation\ServiceController::class, 'destroy'])->name('destroy');
+            });
+
+            // Unités
+            Route::prefix('unites')->name('unites.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'getData'])->name('data');
+                Route::get('/majors', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'getMajors'])->name('majors');
+                Route::get('/services-by-direction/{directionId}', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'getServicesByDirection'])->name('services-by-direction'); // Helper ajax
+                Route::post('/', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'store'])->name('store');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'show'])->name('show');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'destroy'])->name('destroy');
+            });
+        });
+
+        // --- PATRIMOINE (Référentiels) ---
+        Route::prefix('patrimoine')->name('patrimoine.')->group(function () {
+            // Statuts
+            Route::prefix('statuts')->name('statuts.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Patrimoine\StatutBienController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Patrimoine\StatutBienController::class, 'getData'])->name('data');
+                Route::post('/', [\Modules\Core\Http\Controllers\Patrimoine\StatutBienController::class, 'store'])->name('store');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Patrimoine\StatutBienController::class, 'show'])->name('show');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Patrimoine\StatutBienController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Patrimoine\StatutBienController::class, 'destroy'])->name('destroy');
+                Route::post('/reorder', [\Modules\Core\Http\Controllers\Patrimoine\StatutBienController::class, 'reorder'])->name('reorder');
+            });
+
+            // États
+            Route::prefix('etats')->name('etats.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Patrimoine\EtatBienController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Patrimoine\EtatBienController::class, 'getData'])->name('data');
+                Route::post('/', [\Modules\Core\Http\Controllers\Patrimoine\EtatBienController::class, 'store'])->name('store');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Patrimoine\EtatBienController::class, 'show'])->name('show');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Patrimoine\EtatBienController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Patrimoine\EtatBienController::class, 'destroy'])->name('destroy');
+                Route::post('/reorder', [\Modules\Core\Http\Controllers\Patrimoine\EtatBienController::class, 'reorder'])->name('reorder');
+            });
+        });
     });
 });
 Route::resource('cores', CoreController::class)->names('core');
