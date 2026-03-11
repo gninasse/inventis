@@ -100,8 +100,7 @@ class FabricantController extends Controller implements HasMiddleware
     {
         try {
             $fabricant = Fabricant::findOrFail($id);
-            $fabricant->actif = false;
-            $fabricant->save();
+            $fabricant->delete();
 
             return response()->json(['success' => true, 'message' => 'Fabricant supprimé (désactivé) avec succès']);
         } catch (\Exception $e) {
@@ -136,8 +135,7 @@ class FabricantController extends Controller implements HasMiddleware
     {
         try {
             $marque = Marque::findOrFail($id);
-            $marque->actif = false;
-            $marque->save();
+            $marque->delete();
 
             return response()->json(['success' => true, 'message' => 'Marque supprimée (désactivée) avec succès']);
         } catch (\Exception $e) {
@@ -173,12 +171,33 @@ class FabricantController extends Controller implements HasMiddleware
     {
         try {
             $modele = Modele::findOrFail($id);
-            $modele->actif = false;
-            $modele->save();
+            $modele->delete();
 
             return response()->json(['success' => true, 'message' => 'Modèle supprimé (désactivé) avec succès']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Erreur: '.$e->getMessage()], 500);
+        }
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = Fabricant::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
+            ], 500);
         }
     }
 }

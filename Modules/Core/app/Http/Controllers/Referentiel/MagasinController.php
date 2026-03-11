@@ -104,8 +104,7 @@ class MagasinController extends Controller implements HasMiddleware
     {
         try {
             $magasin = Magasin::findOrFail($id);
-            $magasin->actif = false;
-            $magasin->save();
+            $magasin->delete();
 
             return response()->json(['success' => true, 'message' => 'Magasin supprimé (désactivé) avec succès']);
         } catch (\Exception $e) {
@@ -141,12 +140,33 @@ class MagasinController extends Controller implements HasMiddleware
     {
         try {
             $emplacement = Emplacement::findOrFail($id);
-            $emplacement->actif = false;
-            $emplacement->save();
+            $emplacement->delete();
 
             return response()->json(['success' => true, 'message' => 'Emplacement supprimé (désactivé) avec succès']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Erreur: '.$e->getMessage()], 500);
+        }
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = Magasin::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
+            ], 500);
         }
     }
 }

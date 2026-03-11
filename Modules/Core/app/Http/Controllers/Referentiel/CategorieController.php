@@ -142,8 +142,7 @@ class CategorieController extends Controller
                 }
             }
 
-            $categorie->actif = false;
-            $categorie->save();
+            $categorie->delete();
 
             return response()->json([
                 'success' => true,
@@ -153,6 +152,28 @@ class CategorieController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Erreur lors de la suppression : '.$e->getMessage(),
+            ], 500);
+        }
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = Categorie::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
             ], 500);
         }
     }

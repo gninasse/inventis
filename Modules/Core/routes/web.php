@@ -262,6 +262,39 @@ Route::middleware(['auth'])->group(function () {
                 Route::put('/{id}', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'update'])->name('update');
                 Route::delete('/{id}', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'destroy'])->name('destroy');
             });
+
+            // Bâtiments
+            Route::prefix('batiments')->name('batiments.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Organisation\BatimentController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Organisation\BatimentController::class, 'getData'])->name('data');
+                Route::get('/by-site/{siteId}', [\Modules\Core\Http\Controllers\Organisation\BatimentController::class, 'getBySite'])->name('by-site');
+                Route::post('/', [\Modules\Core\Http\Controllers\Organisation\BatimentController::class, 'store'])->name('store');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Organisation\BatimentController::class, 'show'])->name('show');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Organisation\BatimentController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Organisation\BatimentController::class, 'destroy'])->name('destroy');
+            });
+
+            // Étages
+            Route::prefix('etages')->name('etages.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Organisation\EtageController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Organisation\EtageController::class, 'getData'])->name('data');
+                Route::get('/by-batiment/{batimentId}', [\Modules\Core\Http\Controllers\Organisation\EtageController::class, 'getByBatiment'])->name('by-batiment');
+                Route::post('/', [\Modules\Core\Http\Controllers\Organisation\EtageController::class, 'store'])->name('store');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Organisation\EtageController::class, 'show'])->name('show');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Organisation\EtageController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Organisation\EtageController::class, 'destroy'])->name('destroy');
+            });
+
+            // Locaux
+            Route::prefix('locaux')->name('locaux.')->group(function () {
+                Route::get('/', [\Modules\Core\Http\Controllers\Organisation\LocalController::class, 'index'])->name('index');
+                Route::get('/data', [\Modules\Core\Http\Controllers\Organisation\LocalController::class, 'getData'])->name('data');
+                Route::get('/by-etage/{etageId}', [\Modules\Core\Http\Controllers\Organisation\LocalController::class, 'getByEtage'])->name('by-etage');
+                Route::post('/', [\Modules\Core\Http\Controllers\Organisation\LocalController::class, 'store'])->name('store');
+                Route::get('/{id}', [\Modules\Core\Http\Controllers\Organisation\LocalController::class, 'show'])->name('show');
+                Route::put('/{id}', [\Modules\Core\Http\Controllers\Organisation\LocalController::class, 'update'])->name('update');
+                Route::delete('/{id}', [\Modules\Core\Http\Controllers\Organisation\LocalController::class, 'destroy'])->name('destroy');
+            });
         });
 
         // --- PATRIMOINE (Référentiels) ---
@@ -288,6 +321,26 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/reorder', [\Modules\Core\Http\Controllers\Patrimoine\EtatBienController::class, 'reorder'])->name('reorder');
             });
         });
+
+        // Toggle Status Routes
+        Route::patch('referentiel/categories/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\CategorieController::class, 'toggleStatus'])->name('referentiel.categories.toggle-status');
+        Route::patch('referentiel/sous-categories/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\SousCategorieController::class, 'toggleStatus'])->name('referentiel.sous-categories.toggle-status');
+        Route::patch('referentiel/familles/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\FamilleController::class, 'toggleStatus'])->name('referentiel.familles.toggle-status');
+        Route::patch('referentiel/articles/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\ArticleController::class, 'toggleStatus'])->name('referentiel.articles.toggle-status');
+        Route::patch('referentiel/unites-mesure/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\UniteMesureController::class, 'toggleStatus'])->name('referentiel.unites.toggle-status');
+        Route::patch('referentiel/fournisseurs/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\FournisseurController::class, 'toggleStatus'])->name('referentiel.fournisseurs.toggle-status');
+        Route::patch('referentiel/fabricants/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\FabricantController::class, 'toggleStatus'])->name('referentiel.fabricants.toggle-status');
+        Route::patch('referentiel/sources-financement/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\SourceFinancementController::class, 'toggleStatus'])->name('referentiel.sources.toggle-status');
+        Route::patch('referentiel/modes-acquisition/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\ModeAcquisitionController::class, 'toggleStatus'])->name('referentiel.modes-acquisition.toggle-status');
+        Route::patch('referentiel/budgets/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\BudgetController::class, 'toggleStatus'])->name('referentiel.budgets.toggle-status');
+        Route::patch('referentiel/magasins/{id}/toggle-status', [\Modules\Core\Http\Controllers\Referentiel\MagasinController::class, 'toggleStatus'])->name('referentiel.magasins.toggle-status');
+        Route::patch('organisation/sites/{id}/toggle-status', [\Modules\Core\Http\Controllers\Organisation\SiteController::class, 'toggleStatus'])->name('organisation.sites.toggle-status');
+        Route::patch('organisation/batiments/{id}/toggle-status', [\Modules\Core\Http\Controllers\Organisation\BatimentController::class, 'toggleStatus'])->name('organisation.batiments.toggle-status');
+        Route::patch('organisation/etages/{id}/toggle-status', [\Modules\Core\Http\Controllers\Organisation\EtageController::class, 'toggleStatus'])->name('organisation.etages.toggle-status');
+        Route::patch('organisation/locaux/{id}/toggle-status', [\Modules\Core\Http\Controllers\Organisation\LocalController::class, 'toggleStatus'])->name('organisation.locaux.toggle-status');
+        Route::patch('organisation/directions/{id}/toggle-status', [\Modules\Core\Http\Controllers\Organisation\DirectionController::class, 'toggleStatus'])->name('organisation.directions.toggle-status');
+        Route::patch('organisation/services/{id}/toggle-status', [\Modules\Core\Http\Controllers\Organisation\ServiceController::class, 'toggleStatus'])->name('organisation.services.toggle-status');
+        Route::patch('organisation/unites/{id}/toggle-status', [\Modules\Core\Http\Controllers\Organisation\UniteController::class, 'toggleStatus'])->name('organisation.unites.toggle-status');
     });
 });
 Route::resource('cores', CoreController::class)->names('core');

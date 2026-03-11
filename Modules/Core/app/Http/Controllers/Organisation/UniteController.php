@@ -131,8 +131,7 @@ class UniteController extends Controller implements HasMiddleware
             // Règle métier: vérification des employés (TODO table employes)
             // if ($unite->employes()->count() > 0) { return ... }
 
-            $unite->actif = false;
-            $unite->save();
+            $unite->delete();
 
             return response()->json(['success' => true, 'message' => 'Unité supprimée (désactivée) avec succès']);
         } catch (\Exception $e) {
@@ -155,5 +154,27 @@ class UniteController extends Controller implements HasMiddleware
         $services = Service::where('direction_id', $directionId)->actif()->get();
 
         return response()->json($services);
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = Unite::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
+            ], 500);
+        }
     }
 }

@@ -25,6 +25,11 @@
                 <i class="fas fa-edit"></i>
             </button>
             @endcan
+            @can('cores.referentiel.articles.toggle-status')
+            <button id="btn-toggle-status" class="btn btn-warning" disabled data-bs-toggle="tooltip" title="Activer/Désactiver">
+                <i class="fas fa-power-off"></i>
+            </button>
+            @endcan
             @can('cores.referentiel.articles.destroy')
             <button id="btn-delete-article" class="btn btn-danger" disabled data-bs-toggle="tooltip" title="Supprimer">
                 <i class="fas fa-trash"></i>
@@ -52,6 +57,7 @@
                     <th data-field="designation" data-sortable="true">Désignation</th>
                     <th data-field="type" data-sortable="true" data-formatter="typeFormatter">Type</th>
                     <th data-field="famille_path" data-sortable="false">Chemin Famille</th>
+                    <th data-field="actif" data-sortable="true" data-formatter="statusFormatter" data-align="center">Statut</th>
                     <th data-field="created_at" data-sortable="true" data-formatter="dateFormatter">Date création</th>
                 </tr>
             </thead>

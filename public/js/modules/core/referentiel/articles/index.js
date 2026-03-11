@@ -27,6 +27,13 @@ $(function () {
         return value;
     }
 
+    window.statusFormatter = function(value, row) {
+        if (row.actif) {
+            return '<span class="badge bg-success"><i class="fas fa-check me-1"></i>Actif</span>';
+        }
+        return '<span class="badge bg-secondary"><i class="fas fa-ban me-1"></i>Inactif</span>';
+    };
+
     // Table instance helper
     const tableInstance = {
         refresh: () => $table.bootstrapTable('refresh'),
@@ -55,6 +62,62 @@ $(function () {
         const isSingleSelection = selections.length === 1;
 
         $('#btn-edit-article').prop('disabled', !isSingleSelection);
+        $('#btn-toggle-status').prop('disabled', !isSingleSelection);
         $('#btn-delete-article').prop('disabled', !hasSelection);
+    });
+
+    // Toggle Status Handler
+    $('#btn-toggle-status').on('click', function() {
+        const id = tableInstance.getSelectedId();
+        if (!id) return;
+
+        const selections = $table.bootstrapTable('getSelections');
+        const actif = selections[0].actif;
+        const action = actif ? 'désactiver' : 'activer';
+
+        Swal.fire({
+            title: 'Confirmer l\'action',
+            text: `Voulez-vous vraiment ${action} cet article ?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, confirmer',
+            cancelButtonText: 'Annuler',
+            confirmButtonColor: '#ffc107',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: route('cores.referentiel.articles.toggle-status', id),
+                    type: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Succès',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                            tableInstance.refresh();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erreur',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur',
+                            text: xhr.responseJSON?.message || 'Une erreur est survenue'
+                        });
+                    }
+                });
+            }
+        });
     });
 });

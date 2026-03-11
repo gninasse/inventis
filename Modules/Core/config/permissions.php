@@ -44,54 +44,65 @@ return [
     // Classification (Catégories, Sous-catégories, Familles)
     'cores.referentiel.classification.index' => 'Voir la classification',
     'cores.referentiel.classification.manage' => 'Gérer la classification',
+    'cores.referentiel.categories.toggle-status' => 'Activer/Désactiver une catégorie',
+    'cores.referentiel.sous-categories.toggle-status' => 'Activer/Désactiver une sous-catégorie',
+    'cores.referentiel.familles.toggle-status' => 'Activer/Désactiver une famille',
 
     // Articles
     'cores.referentiel.articles.index' => 'Voir la liste des articles',
     'cores.referentiel.articles.store' => 'Créer un article',
     'cores.referentiel.articles.update' => 'Modifier un article',
     'cores.referentiel.articles.destroy' => 'Supprimer un article',
+    'cores.referentiel.articles.toggle-status' => 'Activer/Désactiver un article',
 
     // Unités de mesure
     'cores.referentiel.unites.index' => 'Voir la liste des unités',
     'cores.referentiel.unites.store' => 'Créer une unité',
     'cores.referentiel.unites.update' => 'Modifier une unité',
     'cores.referentiel.unites.destroy' => 'Supprimer une unité',
+    'cores.referentiel.unites.toggle-status' => 'Activer/Désactiver une unité',
 
     // Fournisseurs
     'cores.referentiel.fournisseurs.index' => 'Voir la liste des fournisseurs',
     'cores.referentiel.fournisseurs.store' => 'Créer un fournisseur',
     'cores.referentiel.fournisseurs.update' => 'Modifier un fournisseur',
     'cores.referentiel.fournisseurs.destroy' => 'Supprimer un fournisseur',
+    'cores.referentiel.fournisseurs.toggle-status' => 'Activer/Désactiver un fournisseur',
 
     // Fabricants & Marques/Modèles
     'cores.referentiel.fabricants.index' => 'Voir la liste des fabricants',
     'cores.referentiel.fabricants.store' => 'Créer un fabricant',
     'cores.referentiel.fabricants.update' => 'Modifier un fabricant',
     'cores.referentiel.fabricants.destroy' => 'Supprimer un fabricant',
+    'cores.referentiel.fabricants.toggle-status' => 'Activer/Désactiver un fabricant',
 
     // Sources de financement
     'cores.referentiel.sources.index' => 'Voir les sources de financement',
     'cores.referentiel.sources.store' => 'Créer une source de financement',
     'cores.referentiel.sources.update' => 'Modifier une source de financement',
     'cores.referentiel.sources.destroy' => 'Supprimer une source de financement',
+    'cores.referentiel.sources.toggle-status' => 'Activer/Désactiver une source',
 
     // Modes d'acquisition
     'cores.referentiel.modes-acquisition.index' => 'Voir les modes d\'acquisition',
     'cores.referentiel.modes-acquisition.store' => 'Créer un mode d\'acquisition',
     'cores.referentiel.modes-acquisition.update' => 'Modifier un mode d\'acquisition',
     'cores.referentiel.modes-acquisition.destroy' => 'Supprimer un mode d\'acquisition',
+    'cores.referentiel.modes-acquisition.toggle-status' => 'Activer/Désactiver un mode',
 
     // Budgets
     'cores.referentiel.budgets.index' => 'Voir la liste des budgets',
     'cores.referentiel.budgets.store' => 'Créer un budget',
     'cores.referentiel.budgets.update' => 'Modifier un budget',
     'cores.referentiel.budgets.destroy' => 'Supprimer un budget',
+    'cores.referentiel.budgets.toggle-status' => 'Activer/Désactiver un budget',
 
     // Magasins & Emplacements
     'cores.referentiel.magasins.index' => 'Voir la liste des magasins',
     'cores.referentiel.magasins.store' => 'Créer un magasin',
     'cores.referentiel.magasins.update' => 'Modifier un magasin',
     'cores.referentiel.magasins.destroy' => 'Supprimer un magasin',
+    'cores.referentiel.magasins.toggle-status' => 'Activer/Désactiver un magasin',
 
     // --- ORGANISATION ---
 
@@ -100,24 +111,28 @@ return [
     'cores.organisation.sites.store' => 'Créer un site',
     'cores.organisation.sites.update' => 'Modifier un site',
     'cores.organisation.sites.destroy' => 'Supprimer un site',
+    'cores.organisation.sites.toggle-status' => 'Activer/Désactiver un site',
 
     // Directions
     'cores.organisation.directions.index' => 'Voir la liste des directions',
     'cores.organisation.directions.store' => 'Créer une direction',
     'cores.organisation.directions.update' => 'Modifier une direction',
     'cores.organisation.directions.destroy' => 'Supprimer une direction',
+    'cores.organisation.directions.toggle-status' => 'Activer/Désactiver une direction',
 
     // Services
     'cores.organisation.services.index' => 'Voir la liste des services',
     'cores.organisation.services.store' => 'Créer un service',
     'cores.organisation.services.update' => 'Modifier un service',
     'cores.organisation.services.destroy' => 'Supprimer un service',
+    'cores.organisation.services.toggle-status' => 'Activer/Désactiver un service',
 
     // Unités
     'cores.organisation.unites.index' => 'Voir la liste des unités',
     'cores.organisation.unites.store' => 'Créer une unité',
     'cores.organisation.unites.update' => 'Modifier une unité',
     'cores.organisation.unites.destroy' => 'Supprimer une unité',
+    'cores.organisation.unites.toggle-status' => 'Activer/Désactiver une unité',
 
     // --- PATRIMOINE (Référentiels) ---
 

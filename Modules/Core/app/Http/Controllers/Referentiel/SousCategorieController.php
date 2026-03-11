@@ -158,8 +158,7 @@ class SousCategorieController extends Controller
                 }
             }
 
-            $sousCategorie->actif = false;
-            $sousCategorie->save();
+            $sousCategorie->delete();
 
             return response()->json([
                 'success' => true,
@@ -169,6 +168,28 @@ class SousCategorieController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Erreur lors de la suppression : '.$e->getMessage(),
+            ], 500);
+        }
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = SousCategorie::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
             ], 500);
         }
     }

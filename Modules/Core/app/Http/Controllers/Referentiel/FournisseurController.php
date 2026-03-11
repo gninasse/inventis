@@ -122,12 +122,33 @@ class FournisseurController extends Controller implements HasMiddleware
     {
         try {
             $fournisseur = Fournisseur::findOrFail($id);
-            $fournisseur->actif = false;
-            $fournisseur->save();
+            $fournisseur->delete();
 
             return response()->json(['success' => true, 'message' => 'Fournisseur supprimé (désactivé) avec succès']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Erreur: '.$e->getMessage()], 500);
+        }
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = Fournisseur::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
+            ], 500);
         }
     }
 }

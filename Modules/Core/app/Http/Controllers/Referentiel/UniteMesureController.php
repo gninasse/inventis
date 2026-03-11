@@ -93,12 +93,33 @@ class UniteMesureController extends Controller implements HasMiddleware
     {
         try {
             $unite = UniteMesure::findOrFail($id);
-            $unite->actif = false;
-            $unite->save();
+            $unite->delete();
 
             return response()->json(['success' => true, 'message' => 'Unité supprimée (désactivée) avec succès']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Erreur: '.$e->getMessage()], 500);
+        }
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = UniteMesure::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
+            ], 500);
         }
     }
 }

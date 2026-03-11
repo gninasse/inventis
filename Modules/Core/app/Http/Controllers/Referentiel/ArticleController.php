@@ -105,8 +105,7 @@ class ArticleController extends Controller implements HasMiddleware
     {
         try {
             $article = Article::findOrFail($id);
-            $article->actif = false;
-            $article->save();
+            $article->delete();
 
             return response()->json(['success' => true, 'message' => 'Article supprimé (désactivé) avec succès']);
         } catch (\Exception $e) {
@@ -133,5 +132,27 @@ class ArticleController extends Controller implements HasMiddleware
         $familles = Famille::where('sous_categorie_id', $sousCategorieId)->where('actif', true)->get();
 
         return response()->json($familles);
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = Article::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
+            ], 500);
+        }
     }
 }

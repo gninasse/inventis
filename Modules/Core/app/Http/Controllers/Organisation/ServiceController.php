@@ -127,8 +127,7 @@ class ServiceController extends Controller implements HasMiddleware
                 return response()->json(['success' => false, 'message' => 'Impossible de supprimer ce service car il contient des unités actives.'], 422);
             }
 
-            $service->actif = false;
-            $service->save();
+            $service->delete();
 
             return response()->json(['success' => true, 'message' => 'Service supprimé (désactivé) avec succès']);
         } catch (\Exception $e) {
@@ -142,5 +141,27 @@ class ServiceController extends Controller implements HasMiddleware
         $directions = Direction::where('site_id', $siteId)->actif()->get();
 
         return response()->json($directions);
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = Service::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
+            ], 500);
+        }
     }
 }

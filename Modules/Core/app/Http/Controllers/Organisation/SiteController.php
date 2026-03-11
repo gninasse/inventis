@@ -111,8 +111,7 @@ class SiteController extends Controller implements HasMiddleware
                 return response()->json(['success' => false, 'message' => 'Impossible de supprimer ce site car il contient des directions actives.'], 422);
             }
 
-            $site->actif = false;
-            $site->save();
+            $site->delete();
 
             return response()->json(['success' => true, 'message' => 'Site supprimé (désactivé) avec succès']);
         } catch (\Exception $e) {
@@ -130,6 +129,28 @@ class SiteController extends Controller implements HasMiddleware
             return response()->json(['success' => true, 'data' => $sites]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Erreur: '.$e->getMessage()], 500);
+        }
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = Site::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
+            ], 500);
         }
     }
 }

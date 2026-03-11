@@ -278,36 +278,35 @@
                   </li>
                   @endcan
                   @endif
-                </ul>
-              </li>
 
-              <!-- GROUPE 3 — PATRIMOINE -->
-              <li class="nav-item {{ request()->routeIs('cores.patrimoine.*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ request()->routeIs('cores.patrimoine.*') ? 'active' : '' }}">
-                  <i class="nav-icon bi bi-archive"></i>
-                  <p>
-                    PATRIMOINE
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  @if(Route::has('cores.patrimoine.statuts.index'))
-                  @can('cores.patrimoine.statuts.index')
+                  @if(Route::has('cores.organisation.batiments.index'))
+                  @can('cores.organisation.batiments.index')
                   <li class="nav-item">
-                    <a href="{{ route('cores.patrimoine.statuts.index') }}" class="nav-link {{ request()->routeIs('cores.patrimoine.statuts.*') ? 'active' : '' }}">
-                      <i class="nav-icon bi bi-toggle-on"></i>
-                      <p>Statuts des biens</p>
+                    <a href="{{ route('cores.organisation.batiments.index') }}" class="nav-link {{ request()->routeIs('cores.organisation.batiments.*') ? 'active' : '' }}">
+                      <i class="nav-icon bi bi-buildings"></i>
+                      <p>Bâtiments</p>
                     </a>
                   </li>
                   @endcan
                   @endif
 
-                  @if(Route::has('cores.patrimoine.etats.index'))
-                  @can('cores.patrimoine.etats.index')
+                  @if(Route::has('cores.organisation.etages.index'))
+                  @can('cores.organisation.etages.index')
                   <li class="nav-item">
-                    <a href="{{ route('cores.patrimoine.etats.index') }}" class="nav-link {{ request()->routeIs('cores.patrimoine.etats.*') ? 'active' : '' }}">
-                      <i class="nav-icon bi bi-clipboard-check"></i>
-                      <p>États des biens</p>
+                    <a href="{{ route('cores.organisation.etages.index') }}" class="nav-link {{ request()->routeIs('cores.organisation.etages.*') ? 'active' : '' }}">
+                      <i class="nav-icon bi bi-layers"></i>
+                      <p>Étages</p>
+                    </a>
+                  </li>
+                  @endcan
+                  @endif
+
+                  @if(Route::has('cores.organisation.locaux.index'))
+                  @can('cores.organisation.locaux.index')
+                  <li class="nav-item">
+                    <a href="{{ route('cores.organisation.locaux.index') }}" class="nav-link {{ request()->routeIs('cores.organisation.locaux.*') ? 'active' : '' }}">
+                      <i class="nav-icon bi bi-door-closed"></i>
+                      <p>Locaux</p>
                     </a>
                   </li>
                   @endcan

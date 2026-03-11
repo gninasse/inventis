@@ -123,12 +123,33 @@ class DirectionController extends Controller implements HasMiddleware
                 return response()->json(['success' => false, 'message' => 'Impossible de supprimer cette direction car elle contient des services actifs.'], 422);
             }
 
-            $direction->actif = false;
-            $direction->save();
+            $direction->delete();
 
             return response()->json(['success' => true, 'message' => 'Direction supprimée (désactivée) avec succès']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Erreur: '.$e->getMessage()], 500);
+        }
+    }
+    /**
+     * Toggle status (actif/inactif).
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $item = Direction::findOrFail($id);
+            $item->actif = !$item->actif;
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $item->actif ? 'Élément activé avec succès' : 'Élément désactivé avec succès',
+                'actif' => $item->actif,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors du changement de statut',
+            ], 500);
         }
     }
 }
